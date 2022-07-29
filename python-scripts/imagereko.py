@@ -1,8 +1,15 @@
 import boto3
+import logging
+import os
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+metadata_table = os.environ["METADATA_TABLE"]
 
 
 def lambda_handler(event, context):
-    client = boto3.client("rekoginition")
+    client = boto3.client("rekognition")
+    dynamodb_resource = boto3.resource("dynamodb")
 
     for records in event["Records"]:
         bucket_name = records["s3"]["bucket"]["name"]

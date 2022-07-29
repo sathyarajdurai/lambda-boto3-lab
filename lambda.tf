@@ -6,7 +6,7 @@ data "archive_file" "python_zip" {
 
 resource "aws_lambda_function" "lab_lambda_image_rekognition" {
   filename      = data.archive_file.python_zip.output_path
-  function_name = imagereko
+  function_name = "imagereko"
 
   role          = aws_iam_role.lambda_role.arn
   handler       = "imagereko.lambda_handler"
@@ -18,7 +18,7 @@ resource "aws_lambda_function" "lab_lambda_image_rekognition" {
 
   environment {
     variables = {
-      "METADATA_TABLE" = aws_dynamodb_table.lambda_image_rekognition.name
+      "METADATA_TABLE" = aws_dynamodb_table.rekognition_lab .name
     }
   }
 }
